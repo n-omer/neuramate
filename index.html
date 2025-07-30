@@ -170,6 +170,20 @@
     </style>
 </head>
 <body>
+    <!-- Fixed Header -->
+<header id="main-header">
+    <a href="#" class="logo">
+        <img src="brain-icon.svg" alt="NEURAMATE Logo"> NEURAMATE
+    </a>
+    <nav>
+        <ul>
+            <li><a href="#section1" class="active">Home</a></li>
+            <li><a href="#section2">Features</a></li>
+            <li><a href="#section3">About</a></li>
+            <li><a href="#section4">Let's Talk</a></li>
+        </ul>
+    </nav>
+</header>
     <!-- Navigation dots -->
     <div class="nav-dots">
         <div class="nav-dot active" data-section="section1"></div>
@@ -266,7 +280,12 @@
             // Update active dot based on current scroll position
             function updateActiveDot() {
                 const scrollPosition = window.scrollY;
-                
+                // Add 'scrolled' class to header when page is scrolled
+                if (scrollPosition > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
                 // Find the section that's most visible in the viewport
                 let activeIndex = 0;
                 let maxVisibility = 0;
@@ -334,7 +353,11 @@
                     currentSection = index + 1;
                 });
             });
-            
+            // Handle main navigation clicks
+            navLinks.forEach((link, index) => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
             // Handle keyboard navigation
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowDown' && currentSection < totalSections) {
