@@ -589,67 +589,94 @@
         </div>
     </section>
 
-    <section id="section3" class="section">
+<section id="section3" class="section">
   <div class="content">
     <h1>Section 3</h1>
     <p>Your Figma content for the third section goes here.</p>
 
     <div class="video-object">
-      <!-- 1. No "controls" attribute, so no default bar -->
-      <video id="productVideo" muted loop playsinline>
+      <!-- Autoplay + loop, muted for mobile-friendly autoplay -->
+      <video
+        id="productVideo"
+        muted
+        loop
+        autoplay
+        playsinline
+      >
         <source src="3dmodel.mp4" type="video/mp4">
         Your browser doesn’t support HTML5 video.
       </video>
 
-      <!-- 2. Custom buttons -->
-      <div class="video-controls">
-        <button id="playBtn">Play</button>
-      </div>
+      <!-- Single toggle button with both icons -->
+      <button id="toggleBtn" class="toggle-btn" aria-label="Pause">
+        <svg class="icon play-icon" viewBox="0 0 24 24" width="32" height="32" style="display: none">
+          <polygon points="5,3 19,12 5,21"></polygon>
+        </svg>
+        <svg class="icon pause-icon" viewBox="0 0 24 24" width="32" height="32">
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+      </button>
     </div>
   </div>
 </section>
 
 <style>
   .video-object {
+    position: relative;
     width: 60%;
     max-width: 800px;
     margin: 40px auto 0;
-    border-radius: 12px;
     overflow: hidden;
+    border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    position: relative;
   }
   .video-object video {
     width: 100%;
     display: block;
   }
-  .video-controls {
-    text-align: center;
-    margin-top: 8px;
-  }
-  .video-controls button {
-    padding: 8px 16px;
-    font-size: 1rem;
-    margin: 0 8px;
+  .toggle-btn {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .toggle-btn .icon {
+    fill: #fff;
   }
 </style>
 
 <script>
-  const vid   = document.getElementById('productVideo');
-  const play  = document.getElementById('playBtn');
+  document.addEventListener('DOMContentLoaded', () => {
+    const video      = document.getElementById('productVideo');
+    const btn        = document.getElementById('toggleBtn');
+    const playIcon   = btn.querySelector('.play-icon');
+    const pauseIcon  = btn.querySelector('.pause-icon');
 
-  play.addEventListener('click', () => {
-    if (vid.paused) {
-      vid.play();
-      play.textContent = 'Pause';
-    } else {
-      vid.pause();
-      play.textContent = 'Play';
-    }
+    // Ensure it really starts playing (some browsers block autoplay until .play() is called)
+    video.play().catch(() => { /* autoplay blocked, user must click */ });
+
+    btn.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+        playIcon.style.display  = 'none';
+        pauseIcon.style.display = 'block';
+        btn.setAttribute('aria-label', 'Pause');
+      } else {
+        video.pause();
+        pauseIcon.style.display = 'none';
+        playIcon.style.display  = 'block';
+        btn.setAttribute('aria-label', 'Play');
+      }
+    });
   });
-
- 
 </script>
 
     <section id="section4" class="section">
