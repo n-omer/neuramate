@@ -604,7 +604,6 @@
       <!-- 2. Custom buttons -->
       <div class="video-controls">
         <button id="playBtn">Play</button>
-        <button id="stopBtn">Stop</button>
       </div>
     </div>
   </div>
@@ -639,7 +638,6 @@
 <script>
   const vid   = document.getElementById('productVideo');
   const play  = document.getElementById('playBtn');
-  const stop  = document.getElementById('stopBtn');
 
   play.addEventListener('click', () => {
     if (vid.paused) {
@@ -651,11 +649,7 @@
     }
   });
 
-  stop.addEventListener('click', () => {
-    vid.pause();
-    vid.currentTime = 0;
-    play.textContent = 'Play';
-  });
+ 
 </script>
 
     <section id="section4" class="section">
