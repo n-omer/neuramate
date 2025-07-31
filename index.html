@@ -30,6 +30,14 @@
             position: relative;
             scroll-snap-align: start;
             overflow: hidden; /* Ensure video doesn't overflow */
+            /* Added transition properties */
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Added for section transitions */
+        .section.active {
+            opacity: 1;
         }
 
         /* Video background styling */
@@ -39,8 +47,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Cover the entire  */
+            object-fit: cover; /* Cover the entire section */
             z-index: 0; /* Behind the content */
+            /* Added transition properties */
+            transition: transform 1s ease, filter 1s ease;
+            transform: scale(1.05);
+            filter: brightness(0.8) blur(2px);
+        }
+
+        /* Added for video transition */
+        .section.active .video-background {
+            transform: scale(1);
+            filter: brightness(1) blur(0);
         }
 
         /* Overlay for better text visibility */
@@ -52,9 +70,16 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.4); /* Adjust opacity as needed */
             z-index: 1;
+            /* Added transition */
+            transition: background-color 0.4s ease;
         }
 
-        /* Example  colors - replace with your design */
+        /* Added for overlay transition */
+        .section.active .overlay {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Example colors - replace with your design */
         #section1 { background-color: #f8f9fa; }
         #section2 { background-color: #000000; }
         #section3 { background-color: #000000; }
@@ -153,12 +178,32 @@
             text-align: center;
             position: relative;
             z-index: 2; /* Above the video and overlay */
+            /* Added transition properties */
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* Added for content transition */
+        .section.active .content {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         h1 {
             font-size: 3rem;
             margin-bottom: 20px;
             color: #fff; /* Light text for dark background */
+            /* Added transition properties */
+            transform: translateY(10px);
+            opacity: 0;
+            transition: transform 0.3s ease 0.1s, opacity 0.3s ease 0.1s;
+        }
+
+        /* Added for heading transition */
+        .section.active h1 {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         p {
@@ -166,7 +211,18 @@
             max-width: 800px;
             margin: 0 auto;
             color: #fff; /* Light text for dark background */
+            /* Added transition properties */
+            transform: translateY(10px);
+            opacity: 0;
+            transition: transform 0.3s ease 0.2s, opacity 0.3s ease 0.2s;
         }
+
+        /* Added for paragraph transition */
+        .section.active p {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
         /* Contact Us section styling */
         .contact-content {
             max-width: 800px;
@@ -181,6 +237,16 @@
             margin-bottom: 40px;
             text-align: left;
             font-weight: 500;
+            /* Added transition properties */
+            transform: translateY(15px);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        /* Added for contact title transition */
+        #section8.active .contact-title {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         .contact-form-container {
@@ -193,6 +259,35 @@
             gap: 20px;
             margin-bottom: 20px;
             width: 100%;
+            /* Added transition properties */
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* Added for staggered contact form rows */
+        #section8.active .contact-form-row:nth-child(1) {
+            transition-delay: 0.1s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #section8.active .contact-form-row:nth-child(2) {
+            transition-delay: 0.15s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #section8.active .contact-form-row:nth-child(3) {
+            transition-delay: 0.2s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #section8.active .contact-form-row:nth-child(4) {
+            transition-delay: 0.25s;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .contact-form-field {
@@ -200,97 +295,209 @@
             position: relative;
         }
 
-.contact-form-field.full-width {
-    width: 100%;
-}
+        .contact-form-field.full-width {
+            width: 100%;
+        }
 
-.contact-input, .contact-textarea {
-    width: 100%;
-    background-color: #13111f;
-    border: none;
-    border-radius: 5px;
-    padding: 15px;
-    color: white;
-    font-size: 1rem;
-}
+        .contact-input, .contact-textarea {
+            width: 100%;
+            background-color: #13111f;
+            border: none;
+            border-radius: 5px;
+            padding: 15px;
+            color: white;
+            font-size: 1rem;
+        }
 
-.contact-textarea {
-    min-height: 120px;
-    resize: vertical;
-}
+        .contact-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
 
-.contact-input::placeholder, .contact-textarea::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-}
+        .contact-input::placeholder, .contact-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
 
-.contact-submit-btn {
-    background-color: #13111f;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 15px 30px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+        .contact-submit-btn {
+            background-color: #13111f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-.contact-submit-btn:hover {
-    background-color: #1e1a33;
-}
+        .contact-submit-btn:hover {
+            background-color: #1e1a33;
+        }
 
-/* Company details at the bottom */
-.company-details {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
-    color: rgba(255, 255, 255, 0.8);
-}
+        /* Company details at the bottom */
+        .company-details {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            /* Added transition properties */
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+        }
 
-.company-detail {
-    display: flex;
-    align-items: center;
-}
+        /* Added for company details transition */
+        #section8.active .company-details {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-.company-icon {
-    color: rgba(255, 255, 255, 0.6);
-    width: 18px;
-    height: 18px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-}
+        .company-detail {
+            display: flex;
+            align-items: center;
+        }
 
-.company-text {
-    font-size: 1rem;
-}
+        .company-icon {
+            color: rgba(255, 255, 255, 0.6);
+            width: 18px;
+            height: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
 
-.company-separator {
-    margin: 0 20px;
-    color: rgba(255, 255, 255, 0.4);
-}
+        .company-text {
+            font-size: 1rem;
+        }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-    .contact-form-row {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .contact-title {
-        font-size: 2rem;
-    }
-    
-    .company-details {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .company-separator {
-        display: none;
-    }
-}
+        .company-separator {
+            margin: 0 20px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .contact-form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .contact-title {
+                font-size: 2rem;
+            }
+            
+            .company-details {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .company-separator {
+                display: none;
+            }
+        }
+
+        /* Feature cards styling for section 2 */
+        .feature-cards {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 300px;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.4s ease;
+        }
+
+        #section2.active .feature-card:nth-child(1) {
+            transition-delay: 0.1s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #section2.active .feature-card:nth-child(2) {
+            transition-delay: 0.2s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #section2.active .feature-card:nth-child(3) {
+            transition-delay: 0.3s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            margin: 0;
+            opacity: 0.8;
+            text-align: left;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transform: rotate(0deg);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        /* Button styling */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition-delay: 0.15s;
+            transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .section.active .btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -321,7 +528,7 @@
     </div>
 
     <!-- Sections - Replace with your Figma design content -->
-    <section id="section1" class="section">
+    <section id="section1" class="section active">
         <!-- Video Background -->
         <video class="video-background" autoplay muted loop playsinline>
             <!-- Replace with your actual video file -->
@@ -334,20 +541,48 @@
         <div class="overlay"></div>
         
         <div class="content">
-            
-        
-            
+            <h1>Welcome to NEURAMATE</h1>
+            <p>Transforming the future with innovative AI solutions</p>
+            <a href="#section2" class="btn">Discover More</a>
         </div>
     </section>
 
     <section id="section2" class="section">
+        <div class="overlay"></div>
         <div class="content">
-            <h1>Section 2</h1>
-            <p>Your Figma content for the second section goes here.</p>
+            <h1>Our Features</h1>
+            <p>Discover how our cutting-edge technology can elevate your business</p>
+            
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Powerful AI-driven data analysis to uncover hidden patterns and insights in your data.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path></svg>
+                    </div>
+                    <h3>Neural Networks</h3>
+                    <p>State-of-the-art neural network architecture designed for maximum efficiency and accuracy.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                    </div>
+                    <h3>Seamless Integration</h3>
+                    <p>Easily integrate our solutions with your existing systems and workflows.</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="section3" class="section">
+        <div class="overlay"></div>
         <div class="content">
             <h1>Section 3</h1>
             <p>Your Figma content for the third section goes here.</p>
@@ -355,6 +590,7 @@
     </section>
 
     <section id="section4" class="section">
+        <div class="overlay"></div>
         <div class="content">
             <h1>Section 4</h1>
             <p>Your Figma content for the fourth section goes here.</p>
@@ -362,6 +598,7 @@
     </section>
 
     <section id="section5" class="section">
+        <div class="overlay"></div>
         <div class="content">
             <h1>Section 5</h1>
             <p>Your Figma content for the fifth section goes here.</p>
@@ -369,6 +606,7 @@
     </section>
 
     <section id="section6" class="section">
+        <div class="overlay"></div>
         <div class="content">
             <h1>Section 6</h1>
             <p>Your Figma content for the sixth section goes here.</p>
@@ -376,6 +614,7 @@
     </section>
 
     <section id="section7" class="section">
+        <div class="overlay"></div>
         <div class="content">
             <h1>Section 7</h1>
             <p>Your Figma content for the seventh section goes here.</p>
@@ -435,8 +674,8 @@
         document.addEventListener('DOMContentLoaded', function() {
            const sections = document.querySelectorAll('.section');
            const navDots = document.querySelectorAll('.nav-dot');
-           const navLinks = document.querySelectorAll('nav ul li a'); // Add this line
-           const header = document.getElementById('main-header'); // Add this line
+           const navLinks = document.querySelectorAll('nav ul li a');
+           const header = document.getElementById('main-header');
            const totalSections = sections.length;
             
             // Track scroll direction and position
@@ -444,6 +683,9 @@
             let scrollDirection = 'down';
             let currentSection = 1;
             let isScrollingUp = false;
+            
+            // Set initial section as active
+            sections[0].classList.add('active');
             
             // Update active dot based on current scroll position
             function updateActiveDot() {
@@ -480,7 +722,15 @@
                     } else {
                         dot.classList.remove('active');
                     }
-                    
+                });
+                
+                // Update active section for transitions
+                sections.forEach((section, index) => {
+                    if (index === activeIndex) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
                 });
             }
             
@@ -522,24 +772,26 @@
                     currentSection = index + 1;
                 });
             });
+            
             // Handle main navigation clicks
             navLinks.forEach((link, index) => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        // Enable snap scrolling for navigation
-        document.documentElement.style.scrollSnapType = 'y mandatory';
-        
-        // Scroll to section
-        const targetId = link.getAttribute('href').substring(1);
-        const targetSection = document.getElementById(targetId);
-        targetSection.scrollIntoView({ behavior: 'smooth' });
-        
-        // Update nav states
-        navLinks.forEach(navLink => navLink.classList.remove('active'));
-        link.classList.add('active');
-    });
-});
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Enable snap scrolling for navigation
+                    document.documentElement.style.scrollSnapType = 'y mandatory';
+                    
+                    // Scroll to section
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Update nav states
+                    navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    link.classList.add('active');
+                });
+            });
+            
             // Handle keyboard navigation
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowDown' && currentSection < totalSections) {
@@ -592,70 +844,70 @@
                     document.documentElement.style.scrollSnapType = 'none';
                 }
             }, { passive: true });
-            // Add this code right before updateActiveDot();
-
-// Contact form handling
-const contactSubmitBtn = document.querySelector('.contact-submit-btn');
-if (contactSubmitBtn) {
-    contactSubmitBtn.addEventListener('click', function() {
-        const inputs = document.querySelectorAll('.contact-input, .contact-textarea');
-        let isValid = true;
-        
-        // Simple validation - check if required fields are filled
-        inputs.forEach(input => {
-            // Skip the company field which is optional
-            if (input.placeholder.includes('optional')) {
-                return;
-            }
             
-            if (!input.value.trim()) {
-                input.style.border = '1px solid #ff4c4c';
-                isValid = false;
-            } else {
-                input.style.border = 'none';
-            }
-        });
-        
-        // Validate email format
-        const emailInput = document.querySelector('input[type="email"]');
-        if (emailInput && emailInput.value.trim()) {
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(emailInput.value.trim())) {
-                emailInput.style.border = '1px solid #ff4c4c';
-                isValid = false;
-            }
-        }
-        
-        // If form is valid, show success indication
-        if (isValid) {
-            const originalText = contactSubmitBtn.textContent;
-            contactSubmitBtn.textContent = 'Sending...';
-            contactSubmitBtn.disabled = true;
-            
-            // Simulate form submission
-            setTimeout(() => {
-                inputs.forEach(input => {
-                    input.value = '';
+            // Contact form handling
+            const contactSubmitBtn = document.querySelector('.contact-submit-btn');
+            if (contactSubmitBtn) {
+                contactSubmitBtn.addEventListener('click', function() {
+                    const inputs = document.querySelectorAll('.contact-input, .contact-textarea');
+                    let isValid = true;
+                    
+                    // Simple validation - check if required fields are filled
+                    inputs.forEach(input => {
+                        // Skip the company field which is optional
+                        if (input.placeholder.includes('optional')) {
+                            return;
+                        }
+                        
+                        if (!input.value.trim()) {
+                            input.style.border = '1px solid #ff4c4c';
+                            isValid = false;
+                        } else {
+                            input.style.border = 'none';
+                        }
+                    });
+                    
+                    // Validate email format
+                    const emailInput = document.querySelector('input[type="email"]');
+                    if (emailInput && emailInput.value.trim()) {
+                        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailPattern.test(emailInput.value.trim())) {
+                            emailInput.style.border = '1px solid #ff4c4c';
+                            isValid = false;
+                        }
+                    }
+                    
+                    // If form is valid, show success indication
+                    if (isValid) {
+                        const originalText = contactSubmitBtn.textContent;
+                        contactSubmitBtn.textContent = 'Sending...';
+                        contactSubmitBtn.disabled = true;
+                        
+                        // Simulate form submission
+                        setTimeout(() => {
+                            inputs.forEach(input => {
+                                input.value = '';
+                            });
+                            
+                            contactSubmitBtn.textContent = 'Message Sent!';
+                            
+                            // Reset button after 3 seconds
+                            setTimeout(() => {
+                                contactSubmitBtn.textContent = originalText;
+                                contactSubmitBtn.disabled = false;
+                            }, 3000);
+                        }, 1500);
+                    }
                 });
-                
-                contactSubmitBtn.textContent = 'Message Sent!';
-                
-                // Reset button after 3 seconds
-                setTimeout(() => {
-                    contactSubmitBtn.textContent = originalText;
-                    contactSubmitBtn.disabled = false;
-                }, 3000);
-            }, 1500);
-        }
-    });
-}
+            }
 
-// Clear validation styling when user begins typing
-document.querySelectorAll('.contact-input, .contact-textarea').forEach(input => {
-    input.addEventListener('input', function() {
-        this.style.border = 'none';
-    });
-});
+            // Clear validation styling when user begins typing
+            document.querySelectorAll('.contact-input, .contact-textarea').forEach(input => {
+                input.addEventListener('input', function() {
+                    this.style.border = 'none';
+                });
+            });
+            
             // Initial update
             updateActiveDot();
         });
