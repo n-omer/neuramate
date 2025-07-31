@@ -591,16 +591,72 @@
 
     <section id="section3" class="section">
   <div class="content">
+    <h1>Section 3</h1>
+    <p>Your Figma content for the third section goes here.</p>
 
-    <!-- NEW: video container -->
     <div class="video-object">
-      <video controls muted loop playsinline>
+      <!-- 1. No "controls" attribute, so no default bar -->
+      <video id="productVideo" muted loop playsinline>
         <source src="3dmodel.mp4" type="video/mp4">
         Your browser doesn’t support HTML5 video.
       </video>
+
+      <!-- 2. Custom buttons -->
+      <div class="video-controls">
+        <button id="playBtn">Play</button>
+        <button id="stopBtn">Stop</button>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .video-object {
+    width: 60%;
+    max-width: 800px;
+    margin: 40px auto 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    position: relative;
+  }
+  .video-object video {
+    width: 100%;
+    display: block;
+  }
+  .video-controls {
+    text-align: center;
+    margin-top: 8px;
+  }
+  .video-controls button {
+    padding: 8px 16px;
+    font-size: 1rem;
+    margin: 0 8px;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  const vid   = document.getElementById('productVideo');
+  const play  = document.getElementById('playBtn');
+  const stop  = document.getElementById('stopBtn');
+
+  play.addEventListener('click', () => {
+    if (vid.paused) {
+      vid.play();
+      play.textContent = 'Pause';
+    } else {
+      vid.pause();
+      play.textContent = 'Play';
+    }
+  });
+
+  stop.addEventListener('click', () => {
+    vid.pause();
+    vid.currentTime = 0;
+    play.textContent = 'Play';
+  });
+</script>
 
     <section id="section4" class="section">
   <div class="content">
