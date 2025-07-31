@@ -524,9 +524,22 @@
             });
             // Handle main navigation clicks
             navLinks.forEach((link, index) => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                });
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Enable snap scrolling for navigation
+        document.documentElement.style.scrollSnapType = 'y mandatory';
+        
+        // Scroll to section
+        const targetId = link.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // Update nav states
+        navLinks.forEach(navLink => navLink.classList.remove('active'));
+        link.classList.add('active');
+    });
+});
             // Handle keyboard navigation
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowDown' && currentSection < totalSections) {
