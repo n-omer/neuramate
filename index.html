@@ -350,7 +350,27 @@
         .contact-submit-btn:hover {
             background-color: #1e1a33;
         }
+.form-message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-size: 1rem;
+}
 
+.form-message.success {
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.form-message.error {
+    color: #F44336;
+    border: 1px solid #F44336;
+    background-color: rgba(244, 67, 54, 0.1);
+}
         /* Company details at the bottom */
         .company-details {
             display: flex;
@@ -1015,36 +1035,42 @@
 </section>
  
 
-   <section id="section8" class="section">
+<section id="section8" class="section">
     <div class="content contact-content">
         <h2 class="contact-title">Contact Us</h2>
         
-        <div class="contact-form-container">
+        <form action="https://docs.google.com/forms/d/e/1FAIpQLSdOg28cN_QMIQqjyEzDWhP9zJ33q-dGwn16kbd0KEwjJQTtEw/formResponse" method="POST" id="contactForm" class="contact-form-container" target="hidden_iframe">
             <div class="contact-form-row">
                 <div class="contact-form-field">
-                    <input type="text" placeholder="Your name" class="contact-input">
+                    <input type="text" placeholder="Your name" class="contact-input" name="entry.2005620554" required> 
                 </div>
                 <div class="contact-form-field">
-                    <input type="email" placeholder="Email" class="contact-input">
+                    <input type="email" placeholder="Email" class="contact-input" name="entry.1045781291" required>
                 </div>
             </div>
             
             <div class="contact-form-row">
                 <div class="contact-form-field full-width">
-                    <input type="text" placeholder="Company (optional)" class="contact-input">
+                    <input type="text" placeholder="Company (optional)" class="contact-input" name="entry.1065046570">
                 </div>
             </div>
             
             <div class="contact-form-row">
                 <div class="contact-form-field full-width">
-                    <textarea placeholder="Message" class="contact-textarea"></textarea>
+                    <textarea placeholder="Message" class="contact-textarea" name="entry.839337160" required></textarea>
                 </div>
             </div>
             
             <div class="contact-form-row">
-                <button class="contact-submit-btn">Send Message</button>
+                <button type="submit" class="contact-submit-btn">Send Message</button>
             </div>
-        </div>
+        </form>
+        
+        <!-- Hidden iframe to prevent page refresh -->
+        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+        
+        <!-- Container for success/error messages -->
+        <div id="formMessage" class="form-message"></div>
         
         <div class="company-details">
             <div class="company-detail">
@@ -1239,62 +1265,67 @@
                 }
             }, { passive: true });
             
-            // Contact form handling
-            const contactSubmitBtn = document.querySelector('.contact-submit-btn');
-            if (contactSubmitBtn) {
-                contactSubmitBtn.addEventListener('click', function() {
-                    const inputs = document.querySelectorAll('.contact-input, .contact-textarea');
-                    let isValid = true;
-                    
-                    // Simple validation - check if required fields are filled
-                    inputs.forEach(input => {
-                        // Skip the company field which is optional
-                        if (input.placeholder.includes('optional')) {
-                            return;
-                        }
-                        
-                        if (!input.value.trim()) {
-                            input.style.border = '1px solid #ff4c4c';
-                            isValid = false;
-                        } else {
-                            input.style.border = 'none';
-                        }
-                    });
-                    
-                    // Validate email format
-                    const emailInput = document.querySelector('input[type="email"]');
-                    if (emailInput && emailInput.value.trim()) {
-                        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                        if (!emailPattern.test(emailInput.value.trim())) {
-                            emailInput.style.border = '1px solid #ff4c4c';
-                            isValid = false;
-                        }
-                    }
-                    
-                    // If form is valid, show success indication
-                    if (isValid) {
-                        const originalText = contactSubmitBtn.textContent;
-                        contactSubmitBtn.textContent = 'Sending...';
-                        contactSubmitBtn.disabled = true;
-                        
-                        // Simulate form submission
-                        setTimeout(() => {
-                            inputs.forEach(input => {
-                                input.value = '';
-                            });
-                            
-                            contactSubmitBtn.textContent = 'Message Sent!';
-                            
-                            // Reset button after 3 seconds
-                            setTimeout(() => {
-                                contactSubmitBtn.textContent = originalText;
-                                contactSubmitBtn.disabled = false;
-                            }, 3000);
-                        }, 1500);
-                    }
-                });
+           // Contact form handling
+const contactSubmitBtn = document.querySelector('.contact-submit-btn');
+if (contactSubmitBtn) {
+    contactSubmitBtn.addEventListener('click', function(event) {
+        // Make sure we're not submitting the form automatically
+        // for Google Forms integration
+        if (event.target.form.getAttribute('target') === 'hidden_iframe') {
+            return; // Let the form submit handler take care of this
+        }
+        
+        const inputs = document.querySelectorAll('.contact-input, .contact-textarea');
+        let isValid = true;
+        
+        // Simple validation - check if required fields are filled
+        inputs.forEach(input => {
+            // Skip the company field which is optional
+            if (input.placeholder.includes('optional')) {
+                return;
             }
-
+            
+            if (!input.value.trim()) {
+                input.style.border = '1px solid #ff4c4c';
+                isValid = false;
+            } else {
+                input.style.border = 'none';
+            }
+        });
+        
+        // Validate email format
+        const emailInput = document.querySelector('input[type="email"]');
+        if (emailInput && emailInput.value.trim()) {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value.trim())) {
+                emailInput.style.border = '1px solid #ff4c4c';
+                isValid = false;
+            }
+        }
+        
+        // If form is valid, show success indication
+        if (isValid) {
+            const originalText = contactSubmitBtn.textContent;
+            contactSubmitBtn.textContent = 'Sending...';
+            contactSubmitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                inputs.forEach(input => {
+                    input.value = '';
+                });
+                
+                contactSubmitBtn.textContent = 'Message Sent!';
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    contactSubmitBtn.textContent = originalText;
+                    contactSubmitBtn.disabled = false;
+                }, 3000);
+            }, 1500);
+        }
+    });
+}
             // Clear validation styling when user begins typing
             document.querySelectorAll('.contact-input, .contact-textarea').forEach(input => {
                 input.addEventListener('input', function() {
@@ -1305,6 +1336,36 @@
             // Initial update
             updateActiveDot();
         });
+     // Contact form handling for Google Forms integration
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    // Let the form submit to the hidden iframe
+    
+    const form = this;
+    const messageElement = document.getElementById('formMessage');
+    const submitBtn = form.querySelector('.contact-submit-btn');
+    const originalText = submitBtn.textContent;
+    
+    // Show sending state
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    
+    // Show success message after submission (with a slight delay)
+    setTimeout(function() {
+        messageElement.textContent = "Thank you! Your message has been sent.";
+        messageElement.className = "form-message success";
+        messageElement.style.display = "block";
+        
+        // Reset form fields
+        form.reset();
+        
+        // Reset button after 5 seconds
+        setTimeout(function() {
+            messageElement.style.display = "none";
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }, 5000);
+    }, 1000);
+});
     </script>
 </body>
 </html>
